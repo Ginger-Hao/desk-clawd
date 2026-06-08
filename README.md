@@ -1,3 +1,7 @@
+<p align="right">
+  <a href="README.zh.md">🇨🇳 中文</a>
+</p>
+
 <p align="center">
   <img src="pics/desk_clawd_on_desk.jpg" alt="Desk Clawd on desk" width="600"/>
 </p>
