@@ -1,56 +1,55 @@
 <p align="center">
-  <img src="pics/clawd_mochi_banner.png" alt="Desk Clawd" width="700"/>
+  <img src="pics/clawd_3D_3_4.png" alt="Desk Clawd 3D Render" width="600"/>
 </p>
 
 <h1 align="center">Desk Clawd 🦀🚦</h1>
 
 <p align="center">
-  <b>A physical Claude Code desk companion — animated LCD eyes + real-time traffic light status indicator, all on one ESP32-C3.</b>
+  <b>An animated desk companion that shows your Claude Code status — LCD eyes + traffic light indicator, all on one ESP32-C3.</b>
 </p>
 
 <p align="center">
   <a href="#features">Features</a> ·
   <a href="#parts-list">Parts</a> ·
   <a href="#wiring">Wiring</a> ·
-  <a href="#software-setup">Software</a> ·
-  <a href="#claude-code-integration">Hooks</a> ·
-  <a href="#3d-models">3D Models</a>
+  <a href="#quick-start">Quick Start</a> ·
+  <a href="#usage">Usage</a> ·
+  <a href="#claude-code-integration">Hooks</a>
 </p>
 
 <p align="center">
-  <b>Cost: ~$8–10</b> ·
-  <b>Build time: ~1.5 hours</b> ·
-  <b>Skill: Beginner</b>
+  <b>~$8–10</b> ·
+  <b>~1.5 hours</b> ·
+  <b>Beginner</b>
 </p>
 
 ---
 
-> ⚠️ This is an independent fan project. It is not affiliated with, sponsored by, or endorsed by Anthropic. "Claude" and "Clawd" are trademarks of Anthropic.
+> ⚠️ Fan project — not affiliated with, sponsored by, or endorsed by Anthropic. "Claude" is a trademark of Anthropic.
 
 ---
-
-<p align="center">
-  <img src="pics/clawd_mochi_3_4.jpeg" alt="Desk Clawd on a desk" width="500"/>
-</p>
 
 ## Features
 
-**🖥 Animated LCD display** — A 1.54" color TFT shows the Clawd mascot with lively expressions:
-- Pixel eyes that wiggle, blink, and squint
-- "Claude Code" view with interactive terminal
-- Canvas for drawing from your phone in real time
+**🖥 Animated LCD eyes** — A 1.54" 240×240 color TFT display brings your desk buddy to life:
 
-**🚦 Traffic light status indicator** — Three physical LEDs reflect your Claude Code session:
+| Mode | What it does |
+|------|-------------|
+| 👀 Idle eyes | Pixel eyes that wiggle, blink, and squint |
+| 💻 Claude Code screen | Terminal-style view showing session state |
+| 🎨 Canvas | Draw from your phone's browser in real time |
+
+**🚦 Traffic light status** — Three physical LEDs mirror your Claude Code session:
 
 | State | Light | When |
 |-------|-------|------|
-| Idle | 🟢 **Green solid** | Waiting for your input |
-| Thinking | 🟡 **Yellow blink** | Claude processing your prompt |
-| Running tools | 🔴 **Red blink** | Tool execution (code, shell, etc.) |
+| Idle | 🟢 **Green steady** | Waiting for your next prompt |
+| Thinking | 🟡 **Yellow blinking** | Claude is generating a response |
+| Running tools | 🔴 **Red blinking** | Tool execution (code, shell, file ops) |
 
-**📱 Web-based controller** — No app, no internet, no cloud. Connect to the ESP32's WiFi and open a browser. Control everything from your phone or PC.
+**📱 Web dashboard** — No app, no internet, no cloud. Connect to the ESP32's built-in WiFi and control everything from any browser.
 
-**🔌 Dual WiFi** — The ESP32 creates its own hotspot for direct phone control, while simultaneously connecting to your home network so your PC can control it without switching WiFi.
+**🔌 Dual WiFi** — The ESP32 creates its own hotspot for direct phone access while simultaneously joining your home network so your PC can control it without switching WiFi.
 
 ---
 
@@ -60,7 +59,7 @@
 |------|------|--------|
 | ESP32-C3 Super Mini | Microcontroller with WiFi | $2.50 |
 | ST7789 1.54" TFT | 240×240 SPI color display | $3.00 |
-| Traffic light module | 3× LED (R/Y/G) with resistors, or 3× 5mm LED + 220Ω resistors | $1.00 |
+| Traffic light module | 3× LED (R/Y/G) with resistors | $1.00 |
 | Jumper wires | 10–12× 8–10 cm Dupont wires | $0.80 |
 | M2×6mm screws (×2) | Mount display bezel | $0.10 |
 | Double-sided tape | Secure components inside case | $0.10 |
@@ -77,8 +76,8 @@
 
 ### ST7789 Display
 
-| Display | ESP32-C3 | Wire color |
-|---------|----------|------------|
+| Display pin | ESP32-C3 | Wire color |
+|-------------|----------|------------|
 | VCC | 3V3 | Red |
 | GND | GND | Black |
 | SDA (MOSI) | GPIO 10 | Orange |
@@ -97,25 +96,24 @@
 | 🔴 Red | GPIO 20 | Red | 220Ω |
 | ⚫ GND | GND | Black | — |
 
-> **GND wiring**: Daisy-chain is fine — ESP32 GND → traffic light GND → display GND.
+> **GND daisy-chain**: ESP32 GND → traffic light GND → display GND. One GND pin is enough.
 
 ---
 
-## Software setup
+## Quick start
 
-### Arduino IDE
+### 1. Arduino IDE setup
 
-1. Download [Arduino IDE 2.x](https://www.arduino.cc/en/software)
-2. **File → Preferences** → Add to "Additional boards manager URLs":
-   ```
-   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
-   ```
-3. **Tools → Board → Boards Manager** → Search `esp32` → Install **"esp32 by Espressif Systems"**
-4. **Tools → Library Manager** → Install:
-   - `Adafruit GFX Library`
-   - `Adafruit ST7735 and ST7789 Library`
+Add board URL in **File → Preferences → Additional boards manager URLs**:
+```
+https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+```
 
-### Board settings
+Then install via **Tools → Boards → Boards Manager**:
+- **esp32** by Espressif Systems
+- Libraries: **Adafruit GFX Library**, **Adafruit ST7735 and ST7789 Library**
+
+### 2. Board settings
 
 | Setting | Value |
 |---------|-------|
@@ -124,36 +122,33 @@
 | CPU Frequency | 160 MHz |
 | Upload Speed | 921600 |
 
-### Home WiFi (optional but recommended)
+### 3. WiFi (optional but recommended)
 
-1. Copy `secrets.h.example` → `secrets.h`
-2. Fill in your WiFi name and password
-3. The ESP32 will connect to your network so your PC can reach it
+Copy `secrets.h.example` → `secrets.h`, fill in your home WiFi credentials. The ESP32 will connect to both its own hotspot AND your home network.
 
-### Upload
+### 4. Upload
 
 1. Open `firmware/desk-clawd/desk-clawd.ino` in Arduino IDE
-2. Connect ESP32 via USB-C
-3. Select port under **Tools → Port**
-4. Click **Upload**
-5. Wait for `Hard resetting via RTS pin...`
+2. Connect ESP32 via USB-C, select the port
+3. Click **Upload**
+4. Wait for `Hard resetting via RTS pin...`
 
 ---
 
 ## Usage
 
-### Web controller
+### Web dashboard
 
 1. Power the ESP32
 2. Connect to WiFi: **`Desk-Clawd`** · password: **`clawd1234`**
 3. Open browser → **`http://192.168.4.1`**
 
-From there you can trigger eye animations, draw on the display, open the terminal, and toggle the backlight.
+From there: control eye animations, draw on screen, toggle backlight, open terminal view.
 
 ### Manual traffic light control
 
 ```bash
-curl http://192.168.4.1/light?state=idle       # 🟢 green on
+curl http://192.168.4.1/light?state=idle       # 🟢 green steady
 curl http://192.168.4.1/light?state=thinking    # 🟡 yellow blink
 curl http://192.168.4.1/light?state=running     # 🔴 red blink
 curl http://192.168.4.1/light?state=G:on        # green on (direct)
@@ -161,32 +156,25 @@ curl http://192.168.4.1/light?state=Y:blink:700 # yellow blink 700ms
 curl http://192.168.4.1/light?state=off         # all off
 ```
 
-### Dual-network IP
+### Network access
 
 | Network | Type | IP | Use for |
 |---------|------|----|---------|
 | `Desk-Clawd` | Hotspot (AP) | `192.168.4.1` | Phone / direct control |
 | Your home WiFi | Client (STA) | DHCP (shown on screen) | PC on same LAN |
 
-The ESP32 displays its LAN IP at boot (e.g. `IP: 10.0.0.42`). Use this for curl from your PC.
-
-### IP auto-detection
-
-If the LAN IP changes, run:
+The ESP32 displays its LAN IP at boot. Run the detection script if the IP changes:
 
 ```bash
-bash scripts/find-esp32.sh
+bash scripts/find-esp32.sh      # Linux / Git Bash
+powershell scripts/find-esp32.ps1  # Windows PowerShell
 ```
-
-It scans your network, finds the ESP32, and auto-updates your Claude Code hooks config.
 
 ---
 
 ## Claude Code integration
 
-The traffic light follows your Claude Code session automatically via hooks — no background process needed.
-
-Merge this into `~/.claude/settings.json` (or copy `claude-hooks.example.json`):
+Add these hooks to `~/.claude/settings.json` to sync the traffic light with your session:
 
 ```json
 {
@@ -221,7 +209,9 @@ Merge this into `~/.claude/settings.json` (or copy `claude-hooks.example.json`):
 }
 ```
 
-Use `192.168.4.1` when your PC is on the `Desk-Clawd` hotspot, or the LAN IP shown on the screen when both devices are on your home WiFi.
+Use `192.168.4.1` when on the hotspot, or the LAN IP shown on screen when both devices are on your home WiFi.
+
+> Also see `claude-hooks.example.json` for a ready-to-merge config.
 
 ---
 
@@ -229,49 +219,39 @@ Use `192.168.4.1` when your PC is on the `Desk-Clawd` hotspot, or the LAN IP sho
 
 ### Electronics case
 
-The main case (body + back plate) is in `models/case/`:
+`models/case/` contains the main enclosure (body + back plate):
 
 | File | Description |
 |------|-------------|
-| `clawd_mochi_v1.stl` | Body + back plate (rename to `desk-clawd` for branding) |
+| `clawd_mochi_v1.stl` | Main case body |
 
-**Print settings:**
-
-| Setting | Value |
-|---------|-------|
-| Material | PLA or PETG |
-| Layer height | 0.15–0.20 mm |
-| Infill | 15% gyroid |
-| Supports | Yes — display window overhang |
-| Orientation | Face-down, flat back on plate |
+**Print settings:** PLA/PETG · 0.15–0.20mm layer · 15% gyroid infill · Supports for display window overhang · Print face-down.
 
 ### Clawd figure
 
-Standalone 3D-printable Clawd mascot (no electronics) in `models/clawd-figure/`:
+`models/clawd-figure/` has standalone mascot models (no electronics):
 
 | File | Description |
 |------|-------------|
-| `clawd_3D_no_AMS.stl` | Original Clawd figure |
+| `clawd_3D_no_AMS.stl` | Standard Clawd figure |
 | `clawd_3D_squished_eyes_no_AMS.stl` | Squished eyes variant |
 
 ---
 
-## Assembly
+## Assembly tips
 
-1. Print case (body + back) — test-fit display before gluing
-2. Thread all wires through the back plate slot
+1. Print case + back plate — test-fit the display before gluing
+2. Thread wires through the back plate slot
 3. Secure ESP32 with double-sided tape inside the back plate
 4. Mount display with M2×6mm screws through bezel holes
 5. Secure traffic light module in its housing
-6. Route USB-C cable through back slot, snap back on
+6. Route USB-C cable through back slot, snap back plate on
 
 ---
 
 ## Customisation
 
-### Eye appearance
-
-In `desk-clawd.ino`:
+### Eye appearance (in `desk-clawd.ino`)
 
 ```cpp
 #define EYE_W   30    // eye width
@@ -281,21 +261,19 @@ In `desk-clawd.ino`:
 #define EYE_OY  40    // vertical offset upward
 ```
 
-### Blink interval
+### Blink speed
 
-Default blink is 250ms. Customise via URL:
+Custom blink interval via URL — handy for testing:
 
 ```bash
 curl http://192.168.4.1/light?state=Y:blink:700
 ```
 
-### Logo animation
+### Logo reveal timing
 
 ```cpp
-// Duration the logo holds after reveal
-delay(1500);
-// Stroke-by-stroke draw speed
-delay(speedMs(8));
+delay(1500);         // hold after reveal
+delay(speedMs(8));   // stroke draw speed
 ```
 
 ---
@@ -308,15 +286,15 @@ desk-clawd/
 │   └── desk-clawd/
 │       └── desk-clawd.ino      # Main firmware
 ├── models/
-│   ├── case/                   # Electronics case (3D print)
-│   └── clawd-figure/           # Clawd mascot figure
-├── pics/                       # Photos and logos
+│   ├── case/                   # 3D-printable case
+│   └── clawd-figure/           # Standalone mascot figure
+├── pics/                       # Photos and renders
 ├── scripts/
 │   ├── find-esp32.sh           # IP auto-detection (bash)
 │   └── find-esp32.ps1          # IP auto-detection (PowerShell)
-├── secrets.h                   # Your WiFi credentials (gitignored)
-├── secrets.h.example           # Template for others
-├── claude-hooks.example.json   # Claude Code hooks config
+├── secrets.h                   # WiFi credentials (gitignored)
+├── secrets.h.example           # Template
+├── claude-hooks.example.json   # Claude Code hooks reference
 ├── LICENSE
 └── README.md
 ```
@@ -325,12 +303,12 @@ desk-clawd/
 
 ## License
 
-Code is licensed under the **MIT License** — see [LICENSE](LICENSE).
+**Code** — MIT License (see [LICENSE](LICENSE))
 
-3D models and media assets are licensed under **CC BY-NC-SA 4.0**.
+**3D models & media** — CC BY-NC-SA 4.0
 
 ---
 
 <p align="center">
-  Built with ❤️ by the Claude Code community
+  <img src="pics/clawd_3D_squished_eyes_3_4.png" alt="Desk Clawd Squished Eyes" width="400"/>
 </p>
