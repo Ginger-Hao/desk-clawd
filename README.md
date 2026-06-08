@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="pics/clawd_3D_3_4.png" alt="Desk Clawd 3D Render" width="600"/>
+  <img src="pics/desk_clawd_on_desk.jpg" alt="Desk Clawd on desk" width="600"/>
 </p>
 
 <h1 align="center">Desk Clawd 🦀🚦</h1>
@@ -310,5 +310,5 @@ desk-clawd/
 ---
 
 <p align="center">
-  <img src="pics/clawd_3D_squished_eyes_3_4.png" alt="Desk Clawd Squished Eyes" width="400"/>
+  <img src="pics/render_3d_squished_3_4.png" alt="Desk Clawd Squished Eyes" width="400"/>
 </p>
